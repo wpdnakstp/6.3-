@@ -1,0 +1,70 @@
+{% load socialaccount %}
+    {% providers_media_js %}
+    
+   
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=y0uaqxom8w"></script>
+</head>
+<body>
+        <h1>hell world!</h1>
+    
+        <a href="/accounts/signup">회원가입</a><br>
+        
+        {% if user.is_authenticated %}
+        <a href="/accounts/logout">로그아웃</a><br>
+        {{user.username}} 님이 로그인 중
+        
+        {% else %}
+        <a href="{% provider_login_url 'google' %}">구글 로그인</a><br>
+        당신 로그인 해야댐
+        
+        {% endif %}
+    
+    
+    
+    {% for i in blog.all %}
+    
+    {{i.title}}
+    {{i.pub_date}}
+    {{i.body}}
+    
+    
+    
+    
+    {% endfor %}
+    <br>
+
+    {% for d in picture.all %}
+
+    <img src="{{d.image.url}}" width="500">
+    <br>
+    {{d.text}}
+    <br>
+    <img src="{{d.image_thumbnail.url}}">
+    {% endfor %}
+    <br><br>
+
+    <div id="map" style="width:50%;height:200px;"></div>
+
+<script>
+
+        var map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(37.3595704, 127.105399),
+            zoom: 10
+        });
+        
+        var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(37.3595704, 127.105399),
+            map: map
+        });
+</script>
+
+</body>
+</html>
